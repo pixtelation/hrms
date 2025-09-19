@@ -16,7 +16,7 @@ public class Launch {
     public void setup() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress", "localhost:61622");
+        options.setExperimentalOption("debuggerAddress", "localhost:64452");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.navigate().refresh();

@@ -1,3 +1,4 @@
+package Tests;
 import Base.Launch;
 import Pages.SuperAdminLogin;
 
@@ -35,8 +36,8 @@ public class SuperAdminLoginTest extends Launch {
     @Test //// Invalid Login Flow
     public void InvalidLoginTest(){
         
-        String uemail = "tarunroy@weavers-web.com";
-        String upass = "Web@2050";
+        String uemail = "admin1@weavers-web.com";
+        String upass = "Admin1@2050";
        
         login = new SuperAdminLogin(driver);
         login.enterEmail(uemail);
@@ -61,8 +62,8 @@ public class SuperAdminLoginTest extends Launch {
     public void loginTest() {
         driver.navigate().refresh();
         login = new SuperAdminLogin(driver);
-        login.enterEmail("tarunroy@weavers-web.com");
-        login.enterPassword("Web@2050");
+        login.enterEmail("admin@weavers-web.com");
+        login.enterPassword("Admin@2050");
         login.clickLogin();
     }
 
