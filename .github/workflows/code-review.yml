@@ -1,0 +1,22 @@
+name: Code Review Trigger
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  notify-chatgpt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Zip repo for analysis
+        run: zip -r repo.zip .
+
+      - name: Upload repo artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: hrms-repo
+          path: repo.zip
