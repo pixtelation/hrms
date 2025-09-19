@@ -35,7 +35,7 @@ public class TenentCreation {
 
 
 
-   public void CLickTenentManageFunction()
+   public void CLickTenentManageMenuFunction()
    {
     TenentManage.click();
    }

@@ -18,10 +18,9 @@ public class Launch {
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("debuggerAddress", "localhost:64452");
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.navigate().refresh();
-        driver.manage().window().maximize();
-        driver.get("https://weaversweb.org/login");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        // driver.manage().window().maximize();
+        // driver.get("https://weaversweb.org/login");
     }
 
     // @AfterClass

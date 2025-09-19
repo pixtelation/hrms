@@ -1,4 +1,3 @@
-package Tests;
 import Base.Launch;
 import Pages.SuperAdminLogin;
 
