@@ -27,8 +27,8 @@ public class Launch {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         // driver.manage().window().maximize();
-        driver.get(SaUrl);             ///////////////////SuperAdmin
-        // driver.get(TaUrl);           //////////////////Tenent(hrms is name of tenent in url)
+        // driver.get(SaUrl);             ///////////////////SuperAdmin
+         driver.get(TaUrl);           //////////////////Tenent(hrms is name of tenent in url)
     }
 
     // @AfterClass
