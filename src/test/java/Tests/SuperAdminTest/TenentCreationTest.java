@@ -1,9 +1,9 @@
-package Tests;
+package Tests.SuperAdminTest;
 
 import org.testng.annotations.Test;
 
 import Base.Launch;
-import Pages.TenentCreation;
+import Pages.SuperAdminPage.TenentCreation;
 
 public class TenentCreationTest extends Launch {
     TenentCreation tc ;

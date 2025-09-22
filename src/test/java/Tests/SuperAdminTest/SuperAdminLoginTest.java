@@ -1,5 +1,7 @@
+package Tests.SuperAdminTest;
 import Base.Launch;
-import Pages.SuperAdminLogin;
+import Pages.SuperAdminPage.SuperAdminLogin;
+import Utils.ConfigReader;
 
 import java.time.Duration;
 
@@ -14,6 +16,9 @@ import org.testng.annotations.Test;
 
 public class SuperAdminLoginTest extends Launch {
     SuperAdminLogin login;
+
+      String SAemail = ConfigReader.getProperty("superadmin_email");
+        String SApassword = ConfigReader.getProperty("superadmin_password");
 
 
 @Test /// Blank Login Flow
@@ -61,8 +66,8 @@ public class SuperAdminLoginTest extends Launch {
     public void loginTest() {
         driver.navigate().refresh();
         login = new SuperAdminLogin(driver);
-        login.enterEmail("admin@weavers-web.com");
-        login.enterPassword("Admin@2050");
+        login.enterEmail(SAemail);
+        login.enterPassword(SApassword);
         login.clickLogin();
     }
 

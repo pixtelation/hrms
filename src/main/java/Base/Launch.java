@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.time.Duration;
 
 import org.testng.annotations.*;
+
+import Utils.ConfigReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Launch {
@@ -14,13 +16,19 @@ public class Launch {
 
     @BeforeClass
     public void setup() {
+        ConfigReader.loadConfig();
+
+         String SaUrl = ConfigReader.getProperty("SuperAdminURL");
+         String TaUrl = ConfigReader.getProperty("TenentAdminURL");
+
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress", "localhost:64452");
+        options.setExperimentalOption("debuggerAddress", "localhost:64453");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         // driver.manage().window().maximize();
-        // driver.get("https://weaversweb.org/login");
+        driver.get(SaUrl);             ///////////////////SuperAdmin
+        // driver.get(TaUrl);           //////////////////Tenent(hrms is name of tenent in url)
     }
 
     // @AfterClass

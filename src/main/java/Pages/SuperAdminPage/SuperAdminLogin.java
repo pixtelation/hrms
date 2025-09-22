@@ -1,4 +1,4 @@
-package Pages;
+package Pages.SuperAdminPage;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

@@ -1,4 +1,4 @@
-package Pages;
+package Pages.SuperAdminPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
