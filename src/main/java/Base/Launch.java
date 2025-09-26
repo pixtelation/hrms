@@ -23,10 +23,10 @@ public class Launch {
 
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress", "localhost:64453");
+        options.setExperimentalOption("debuggerAddress", "localhost:53478");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        // driver.manage().window().maximize();
+        driver.manage().window().maximize();
         // driver.get(SaUrl);             ///////////////////SuperAdmin
          driver.get(TaUrl);           //////////////////Tenent(hrms is name of tenent in url)
     }
