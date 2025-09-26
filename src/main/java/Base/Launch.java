@@ -27,8 +27,34 @@ public class Launch {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.manage().window().maximize();
-        // driver.get(SaUrl);             ///////////////////SuperAdmin
-         driver.get(TaUrl);           //////////////////Tenent(hrms is name of tenent in url)
+
+
+         // ✅ Detect package and pick URL
+        String packageName = this.getClass().getPackage().getName();
+
+        String targetUrl;
+        if (packageName.contains("SuperAdminTest")) {
+            targetUrl = ConfigReader.getProperty("SuperAdminURL");
+        } else if (packageName.contains("TenentTest")) {
+            targetUrl = ConfigReader.getProperty("TenentAdminURL");
+        } else {
+            throw new RuntimeException("No URL configured for: " + packageName);
+        }
+
+        // ✅ Navigate or refresh
+        String currentUrl = "";
+        try {
+            currentUrl = driver.getCurrentUrl();
+        } catch (Exception ignored) {}
+
+        if (!currentUrl.startsWith(targetUrl)) {
+            driver.get(targetUrl);
+        } else {
+            driver.navigate().refresh();
+        }
+    }
+        // // driver.get(SaUrl);             ///////////////////SuperAdmin
+        //  driver.get(TaUrl);           //////////////////Tenent(hrms is name of tenent in url)
     }
 
     // @AfterClass
@@ -36,4 +62,4 @@ public class Launch {
     //     driver.quit();
     // }
     
-}
+
