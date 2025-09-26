@@ -26,7 +26,15 @@ public class Launch {
         options.setExperimentalOption("debuggerAddress", "localhost:53478");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+         try {
+        // If getting window size works, the session probably already has a state
+        driver.manage().window().getSize();
+        System.out.println("🔹 Browser already running, skip maximize()");
+    } catch (Exception e) {
+        // If getSize() fails, it's likely a new session
         driver.manage().window().maximize();
+        System.out.println("✅ Browser launched fresh, maximized window");
+    }
 
 
          // ✅ Detect package and pick URL
