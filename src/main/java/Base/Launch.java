@@ -26,6 +26,8 @@ public class Launch {
         options.setExperimentalOption("debuggerAddress", "localhost:53478");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.manage().window().maximize();
+
          try {
         // If getting window size works, the session probably already has a state
         driver.manage().window().getSize();
@@ -58,7 +60,7 @@ public class Launch {
         if (!currentUrl.startsWith(targetUrl)) {
             driver.get(targetUrl);
         } else {
-            driver.navigate().refresh();
+           // driver.navigate().refresh();
         }
     }
         // // driver.get(SaUrl);             ///////////////////SuperAdmin
