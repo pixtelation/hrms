@@ -12,7 +12,7 @@ public class DashboardTest extends Launch{
     @Test
     public void TestDashboardMenu()
     {
-        dbd = new Dashboard(driver);
+        dbd = new Dashboard(Launch.getDriver());
         dbd.clickDbdMenu();
     }
 
