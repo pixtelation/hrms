@@ -28,6 +28,16 @@ public class Launch {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.manage().window().maximize();
 
+         try {
+        // If getting window size works, the session probably already has a state
+        driver.manage().window().getSize();
+        System.out.println("🔹 Browser already running, skip maximize()");
+    } catch (Exception e) {
+        // If getSize() fails, it's likely a new session
+        driver.manage().window().maximize();
+        System.out.println("✅ Browser launched fresh, maximized window");
+    }
+
 
          // ✅ Detect package and pick URL
         String packageName = this.getClass().getPackage().getName();
@@ -50,7 +60,7 @@ public class Launch {
         if (!currentUrl.startsWith(targetUrl)) {
             driver.get(targetUrl);
         } else {
-            driver.navigate().refresh();
+           // driver.navigate().refresh();
         }
     }
         // // driver.get(SaUrl);             ///////////////////SuperAdmin
