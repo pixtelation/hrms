@@ -3,46 +3,57 @@ package Base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.time.Duration;
-
-import org.testng.annotations.*;
-
-import Utils.ConfigReader;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeClass;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import java.time.Duration;
+import Utils.ConfigReader; 
+
 public class Launch {
-    public WebDriver driver;
 
-    @BeforeClass
-    public void setup() {
+    // IMPORTANT: This static ThreadLocal provides the *thread-safe* storage 
+    // for the WebDriver instance. This is the crucial element for parallel execution.
+    private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+
+    private static final String DEBUG_PORT = "53478"; 
+
+    /**
+     * Public access method to retrieve the WebDriver instance.
+     * Your test classes will use this to interact with the browser.
+     * * @return The WebDriver instance for the current thread.
+     */
+    public static WebDriver getDriver() {
+        return tlDriver.get();
+    }
+
+    @BeforeSuite(alwaysRun = true)
+    public void setupSuite() {
         ConfigReader.loadConfig();
-
-         String SaUrl = ConfigReader.getProperty("SuperAdminURL");
-         String TaUrl = ConfigReader.getProperty("TenentAdminURL");
-
         WebDriverManager.chromedriver().setup();
+
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress", "localhost:53478");
-        driver = new ChromeDriver(options);
+        options.addArguments("--remote-debugging-port=" + DEBUG_PORT);
+
+        WebDriver driver = new ChromeDriver(options);
+        
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.manage().window().maximize();
 
-         try {
-        // If getting window size works, the session probably already has a state
-        driver.manage().window().getSize();
-        System.out.println("🔹 Browser already running, skip maximize()");
-    } catch (Exception e) {
-        // If getSize() fails, it's likely a new session
-        driver.manage().window().maximize();
-        System.out.println("✅ Browser launched fresh, maximized window");
+        // Store the newly created driver in the ThreadLocal
+        tlDriver.set(driver);
+        System.out.println("✅ Browser launched and configured with remote debugging port: " + DEBUG_PORT);
     }
 
-
-         // ✅ Detect package and pick URL
+    @BeforeClass(alwaysRun = true)
+    public void navigateToUrl() {
+        // We use the public getter method here and in all subsequent interactions
+        WebDriver driver = getDriver(); 
+        
         String packageName = this.getClass().getPackage().getName();
-
         String targetUrl;
+
         if (packageName.contains("SuperAdminTest")) {
             targetUrl = ConfigReader.getProperty("SuperAdminURL");
         } else if (packageName.contains("TenentTest")) {
@@ -51,25 +62,22 @@ public class Launch {
             throw new RuntimeException("No URL configured for: " + packageName);
         }
 
-        // ✅ Navigate or refresh
-        String currentUrl = "";
         try {
-            currentUrl = driver.getCurrentUrl();
-        } catch (Exception ignored) {}
-
-        if (!currentUrl.startsWith(targetUrl)) {
+            if (!driver.getCurrentUrl().startsWith(targetUrl)) {
+                driver.get(targetUrl);
+            }
+        } catch (Exception e) {
             driver.get(targetUrl);
-        } else {
-           // driver.navigate().refresh();
         }
     }
-        // // driver.get(SaUrl);             ///////////////////SuperAdmin
-        //  driver.get(TaUrl);           //////////////////Tenent(hrms is name of tenent in url)
-    }
 
-    // @AfterClass
-    // public void teardown() {
-    //     driver.quit();
+    // @AfterSuite(alwaysRun = true)
+    // public void teardownSuite() {
+    //     WebDriver driver = tlDriver.get();
+    //     if (driver != null) {
+    //         driver.quit();
+    //         tlDriver.remove();
+    //         System.out.println("❌ Browser closed after suite execution.");
+    //     }
     // }
-    
-
+}

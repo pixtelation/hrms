@@ -9,7 +9,7 @@ public class TenentCreationTest extends Launch {
     TenentCreation tc ;
 
 
-    @Test //// Positive Add new Tenent
+    @Test (priority = 2)//// Positive Add new Tenent
     public void AddTenentPositive()
     {
         tc.CLickTenentManageMenuFunction();
@@ -22,10 +22,10 @@ public class TenentCreationTest extends Launch {
     }
 
 
-    @Test
+    @Test (priority = 1)
     public void BlankTenent()
     {
-        tc = new TenentCreation(driver);
+        tc = new TenentCreation(Launch.getDriver());
         tc.CLickTenentManageMenuFunction();
         tc.ClickAddNewFunction();
         tc.ClickAddTenentFormFunction();

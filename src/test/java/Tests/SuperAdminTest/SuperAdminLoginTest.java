@@ -17,14 +17,16 @@ import org.testng.annotations.Test;
 public class SuperAdminLoginTest extends Launch {
     SuperAdminLogin login;
 
+    
+
       String SAemail = ConfigReader.getProperty("superadmin_email");
         String SApassword = ConfigReader.getProperty("superadmin_password");
 
 
-@Test /// Blank Login Flow
+@Test (priority = 1)/// Blank Login Flow
     public void BlankloginTest() {
-        driver.navigate().refresh();
-        login = new SuperAdminLogin(driver);
+        Launch.getDriver().navigate().refresh();
+        login = new SuperAdminLogin(Launch.getDriver());
         login.clickLogin();
 
          String emailerror = login.emailerrormsg.getText();
@@ -37,18 +39,18 @@ public class SuperAdminLoginTest extends Launch {
 
 
 
-    @Test //// Invalid Login Flow
+    @Test (priority = 2)//// Invalid Login Flow
     public void InvalidLoginTest(){
         
         String uemail = "admin1@weavers-web.com";
         String upass = "Admin1@2050";
        
-        login = new SuperAdminLogin(driver);
+        login = new SuperAdminLogin(Launch.getDriver());
         login.enterEmail(uemail);
         login.enterPassword(upass);
         login.clickLogin();
 
-         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+         WebDriverWait wait = new WebDriverWait(Launch.getDriver(), Duration.ofSeconds(3));
     
     try {
        
@@ -62,10 +64,10 @@ public class SuperAdminLoginTest extends Launch {
 
 
 
-    @Test // Positive Login flow 
+    @Test (priority = 3) // Positive Login flow 
     public void loginTest() {
-        driver.navigate().refresh();
-        login = new SuperAdminLogin(driver);
+        Launch.getDriver().navigate().refresh();
+        login = new SuperAdminLogin(Launch.getDriver());
         login.enterEmail(SAemail);
         login.enterPassword(SApassword);
         login.clickLogin();

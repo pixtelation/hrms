@@ -19,7 +19,7 @@ public class TenentLoginTest extends Launch {
 
     @Test
     public void TenentLoginFlow() {
-        ta = new TenentAdminLogin(driver);
+        ta = new TenentAdminLogin(Launch.getDriver());
 
         // Step 1: Enter credentials and click login
         ta.TenentEmailfnx(TenentEmail);
@@ -28,7 +28,7 @@ public class TenentLoginTest extends Launch {
 
         // Step 2: Try to wait for dashboard (success)
         try {
-            WebElement dashboard = ta.TenentLoginAssert(driver); // Waits 10s max
+            WebElement dashboard = ta.TenentLoginAssert(Launch.getDriver()); // Waits 10s max
             String dashboardText = dashboard.getText();
             System.out.println("Login successfull....Dashboard text: " + dashboardText);
             Assert.assertTrue(dashboardText.contains("Dashboard"), "Dashboard not displayed as expected.");
@@ -36,10 +36,10 @@ public class TenentLoginTest extends Launch {
         } catch (TimeoutException e) {
             // Dashboard didn't load → check for toast (failure)
             try {
-                  WebElement toast = ta.waitForToastMessage(driver);
+                  WebElement toast = ta.waitForToastMessage(Launch.getDriver());
 
             // Use JavaScript to get text content (more reliable)
-             JavascriptExecutor js = (JavascriptExecutor) driver;
+             JavascriptExecutor js = (JavascriptExecutor) Launch.getDriver();
             String toastText = (String) js.executeScript("return document.getElementById('swal2-title')?.textContent;");
 
             System.out.println("Login failed. Toast Message: " + toastText);
