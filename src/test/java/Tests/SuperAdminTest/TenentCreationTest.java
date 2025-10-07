@@ -2,10 +2,10 @@ package Tests.SuperAdminTest;
 
 import org.testng.annotations.Test;
 
-import Base.Launch;
+import Base.Launch1;
 import Pages.SuperAdminPage.TenentCreation;
 
-public class TenentCreationTest extends Launch {
+public class TenentCreationTest extends Launch1 {
     TenentCreation tc ;
 
 
@@ -25,7 +25,7 @@ public class TenentCreationTest extends Launch {
     @Test (priority = 1)
     public void BlankTenent()
     {
-        tc = new TenentCreation(Launch.getDriver());
+        tc = new TenentCreation(Launch1.getDriver());
         tc.CLickTenentManageMenuFunction();
         tc.ClickAddNewFunction();
         tc.ClickAddTenentFormFunction();

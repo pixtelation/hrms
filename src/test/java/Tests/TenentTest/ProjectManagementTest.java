@@ -1,0 +1,24 @@
+package Tests.TenentTest;
+
+import Base.Launch;
+import Base.Launch1;
+import Pages.TenentPage.ProjectManagement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
+
+public class ProjectManagementTest extends Launch {
+    ProjectManagement pm;
+    @Test
+    public void ProjectManagementFlow() {
+        pm= new ProjectManagement(driver);
+        pm.clickPMMenuBtn();
+        pm.clickAddNewProjectBtn();
+        pm.enterProjectName("New Project Alpha");
+        pm.enterStartDate("10/07/2025");
+        pm.enterProjectCost("15000");
+        pm.clickCreateBtn();
+    }
+
+}

@@ -1,5 +1,5 @@
 package Tests.SuperAdminTest;
-import Base.Launch;
+import Base.Launch1;
 import Pages.SuperAdminPage.SuperAdminLogin;
 import Utils.ConfigReader;
 
@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 
 
-public class SuperAdminLoginTest extends Launch {
+public class SuperAdminLoginTest extends Launch1 {
     SuperAdminLogin login;
 
     
@@ -25,8 +25,8 @@ public class SuperAdminLoginTest extends Launch {
 
 @Test (priority = 1)/// Blank Login Flow
     public void BlankloginTest() {
-        Launch.getDriver().navigate().refresh();
-        login = new SuperAdminLogin(Launch.getDriver());
+        Launch1.getDriver().navigate().refresh();
+        login = new SuperAdminLogin(Launch1.getDriver());
         login.clickLogin();
 
          String emailerror = login.emailerrormsg.getText();
@@ -45,12 +45,12 @@ public class SuperAdminLoginTest extends Launch {
         String uemail = "admin1@weavers-web.com";
         String upass = "Admin1@2050";
        
-        login = new SuperAdminLogin(Launch.getDriver());
+        login = new SuperAdminLogin(Launch1.getDriver());
         login.enterEmail(uemail);
         login.enterPassword(upass);
         login.clickLogin();
 
-         WebDriverWait wait = new WebDriverWait(Launch.getDriver(), Duration.ofSeconds(3));
+         WebDriverWait wait = new WebDriverWait(Launch1.getDriver(), Duration.ofSeconds(3));
     
     try {
        
@@ -66,8 +66,8 @@ public class SuperAdminLoginTest extends Launch {
 
     @Test (priority = 3) // Positive Login flow 
     public void loginTest() {
-        Launch.getDriver().navigate().refresh();
-        login = new SuperAdminLogin(Launch.getDriver());
+        Launch1.getDriver().navigate().refresh();
+        login = new SuperAdminLogin(Launch1.getDriver());
         login.enterEmail(SAemail);
         login.enterPassword(SApassword);
         login.clickLogin();

@@ -1,6 +1,7 @@
 package Tests.TenentTest;
 
 import Base.Launch;
+import Base.Launch1;
 import Pages.TenentPage.TenentAdminLogin;
 import Utils.ConfigReader;
 import org.openqa.selenium.WebElement;
@@ -19,7 +20,7 @@ public class TenentLoginTest extends Launch {
 
     @Test
     public void TenentLoginFlow() {
-        ta = new TenentAdminLogin(Launch.getDriver());
+        ta = new TenentAdminLogin(driver);
 
         // Step 1: Enter credentials and click login
         ta.TenentEmailfnx(TenentEmail);
@@ -28,7 +29,7 @@ public class TenentLoginTest extends Launch {
 
         // Step 2: Try to wait for dashboard (success)
         try {
-            WebElement dashboard = ta.TenentLoginAssert(Launch.getDriver()); // Waits 10s max
+            WebElement dashboard = ta.TenentLoginAssert(Launch1.getDriver()); // Waits 10s max
             String dashboardText = dashboard.getText();
             System.out.println("Login successfull....Dashboard text: " + dashboardText);
             Assert.assertTrue(dashboardText.contains("Dashboard"), "Dashboard not displayed as expected.");
@@ -36,10 +37,10 @@ public class TenentLoginTest extends Launch {
         } catch (TimeoutException e) {
             // Dashboard didn't load → check for toast (failure)
             try {
-                  WebElement toast = ta.waitForToastMessage(Launch.getDriver());
+                  WebElement toast = ta.waitForToastMessage(Launch1.getDriver());
 
             // Use JavaScript to get text content (more reliable)
-             JavascriptExecutor js = (JavascriptExecutor) Launch.getDriver();
+             JavascriptExecutor js = (JavascriptExecutor) Launch1.getDriver();
             String toastText = (String) js.executeScript("return document.getElementById('swal2-title')?.textContent;");
 
             System.out.println("Login failed. Toast Message: " + toastText);
