@@ -1,11 +1,7 @@
 package Tests.TenentTest;
 
 import Base.Launch;
-import Base.Launch1;
 import Pages.TenentPage.ProjectManagement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 public class ProjectManagementTest extends Launch {

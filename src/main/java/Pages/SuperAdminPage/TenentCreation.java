@@ -11,7 +11,7 @@ public class TenentCreation {
      PageFactory.initElements(driver, this);
     }
 
-   @FindBy (xpath= "//a[normalize-space()='Tenant Management']")
+   @FindBy (xpath= "//a[@class=' sidebar-link d-block ']")
    WebElement TenentManage;
 
    @FindBy (xpath= "(//button[normalize-space()='Add New'])[1]")

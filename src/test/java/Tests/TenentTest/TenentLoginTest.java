@@ -1,7 +1,6 @@
 package Tests.TenentTest;
 
 import Base.Launch;
-import Base.Launch1;
 import Pages.TenentPage.TenentAdminLogin;
 import Utils.ConfigReader;
 import org.openqa.selenium.WebElement;

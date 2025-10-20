@@ -12,7 +12,8 @@ private static Properties prop;
     public static void loadConfig() {
         prop = new Properties();
         try {
-            FileInputStream fis = new FileInputStream("src\\test\\resources\\config.properties");
+            FileInputStream fis = new FileInputStream("src/test/resources/config.properties");
+           //FileInputStream fis = new FileInputStream("src\\test\\resources\\config.properties");
             prop.load(fis);
         } catch (IOException e) {
             e.printStackTrace();

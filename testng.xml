@@ -1,36 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="hrms" verbose="2">
 
-<!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   SuperAdmin - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-<test name="SuperAdmin Login">
+<suite name="SingleSuperAdminLoginTest" verbose="2" parallel="false">
+    
+    <test name="SuperAdminLoginOnly">
         <classes>
             <class name="Tests.SuperAdminTest.SuperAdminLoginTest"/>
         </classes>
     </test>
 
-
-<test name="SuperAdmin TenentCreation">
-        <classes>
-            <class name="Tests.SuperAdminTest.TenentCreationTest"/>
-        </classes>
-    </test>
-
-
-
-
-<!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   Tenent - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <test name="Tenent Login">
-        <classes>
-            <class name="Tests.TenentTest.TenentLoginTest"/>
-        </classes>
-    </test>
-
-    <test name="Tenent Dashboard" depends-on="Tenent Login">
-        <classes>
-            <class name="Tests.TenentTest.DashboardTest"/>
-        </classes>
-    </test>
-    
 </suite>

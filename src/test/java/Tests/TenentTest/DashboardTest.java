@@ -1,14 +1,33 @@
 package Tests.TenentTest;
 
+<<<<<<< HEAD
 import Base.Launch;
+=======
+import org.testng.annotations.BeforeClass;
+>>>>>>> ff3cf53f897fdd96901800d6921e7a4b9c2db3f9
 import org.testng.annotations.Test;
 
-import Base.Launch1;
 import Pages.TenentPage.Dashboard;
 
 public class DashboardTest extends Launch {
 
     Dashboard dbd;
+
+      @BeforeClass
+    public void prerequisiteLogin() {
+        // 1. Check the package name
+        String packageName = this.getClass().getPackage().getName();
+        
+        // 2. Perform the required login if not already logged in
+        if (packageName.contains("TenentTest")) {
+            Launch.loginAsTenentAdmin();
+        } else if (packageName.contains("SuperAdminTest")) {
+            // Unlikely for DashboardTest, but good to show the conditional logic
+            Launch.loginAsSuperAdmin(); 
+        }
+    }
+
+    
 
     @Test
     public void TestDashboardMenu()
