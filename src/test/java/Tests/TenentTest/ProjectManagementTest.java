@@ -8,7 +8,7 @@ public class ProjectManagementTest extends Launch {
     ProjectManagement pm;
     @Test
     public void ProjectManagementFlow() {
-        pm= new ProjectManagement(driver);
+        pm= new ProjectManagement(Launch.getDriver());
         pm.clickPMMenuBtn();
         pm.clickAddNewProjectBtn();
         pm.enterProjectName("New Project Alpha");

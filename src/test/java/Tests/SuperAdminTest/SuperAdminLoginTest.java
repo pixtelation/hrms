@@ -11,9 +11,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import Base.Launch;
 
 
-public class SuperAdminLoginTest extends Launch1 {
+
+public class SuperAdminLoginTest extends Launch {
     SuperAdminLogin login;
 
     
@@ -24,8 +26,8 @@ public class SuperAdminLoginTest extends Launch1 {
 
 @Test (priority = 1)/// Blank Login Flow
     public void BlankloginTest() {
-        Launch1.getDriver().navigate().refresh();
-        login = new SuperAdminLogin(Launch1.getDriver());
+        Launch.getDriver().navigate().refresh();
+        login = new SuperAdminLogin(Launch.getDriver());
         login.clickLogin();
 
          String emailerror = login.emailerrormsg.getText();
@@ -44,12 +46,12 @@ public class SuperAdminLoginTest extends Launch1 {
         String uemail = "admin1@weavers-web.com";
         String upass = "Admin1@2050";
        
-        login = new SuperAdminLogin(Launch1.getDriver());
+        login = new SuperAdminLogin(Launch.getDriver());
         login.enterEmail(uemail);
         login.enterPassword(upass);
         login.clickLogin();
 
-         WebDriverWait wait = new WebDriverWait(Launch1.getDriver(), Duration.ofSeconds(3));
+         WebDriverWait wait = new WebDriverWait(Launch.getDriver(), Duration.ofSeconds(3));
     
     try {
        
@@ -65,8 +67,8 @@ public class SuperAdminLoginTest extends Launch1 {
 
     @Test (priority = 3) // Positive Login flow 
     public void loginTest() {
-        Launch1.getDriver().navigate().refresh();
-        login = new SuperAdminLogin(Launch1.getDriver());
+        Launch.getDriver().navigate().refresh();
+        login = new SuperAdminLogin(Launch.getDriver());
         login.enterEmail(SAemail);
         login.enterPassword(SApassword);
         login.clickLogin();

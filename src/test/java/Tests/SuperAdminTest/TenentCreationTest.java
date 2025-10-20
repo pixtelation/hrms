@@ -3,9 +3,10 @@ package Tests.SuperAdminTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import Base.Launch;
 import Pages.SuperAdminPage.TenentCreation;
 
-public class TenentCreationTest extends Launch1 {
+public class TenentCreationTest extends Launch {
     TenentCreation tc ;
     
      @BeforeClass
@@ -39,7 +40,7 @@ public class TenentCreationTest extends Launch1 {
     @Test (priority = 1)
     public void BlankTenent()
     {
-        tc = new TenentCreation(Launch1.getDriver());
+        tc = new TenentCreation(Launch.getDriver());
         tc.CLickTenentManageMenuFunction();
         tc.ClickAddNewFunction();
         tc.ClickAddTenentFormFunction();

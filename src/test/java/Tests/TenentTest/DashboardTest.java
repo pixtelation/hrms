@@ -1,10 +1,10 @@
 package Tests.TenentTest;
 
-<<<<<<< HEAD
 import Base.Launch;
-=======
+
+import  Base.Launch;
+
 import org.testng.annotations.BeforeClass;
->>>>>>> ff3cf53f897fdd96901800d6921e7a4b9c2db3f9
 import org.testng.annotations.Test;
 
 import Pages.TenentPage.Dashboard;
@@ -32,7 +32,7 @@ public class DashboardTest extends Launch {
     @Test
     public void TestDashboardMenu()
     {
-        dbd = new Dashboard(driver);
+        dbd = new Dashboard(Launch.getDriver());
         dbd.clickDbdMenu();
     }
 
