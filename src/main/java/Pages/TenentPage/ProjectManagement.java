@@ -12,7 +12,7 @@ public class ProjectManagement {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//A[normalize-space(.)='Project Management']")
+    @FindBy(xpath = "//A[normalize-space(.)='Projects']")
     WebElement ProjectManagementMenuBtn;
 
     @FindBy(xpath = "//A[normalize-space(.)='Add New']")
