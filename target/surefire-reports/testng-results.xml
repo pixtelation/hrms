@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-12-17T15:19:08 IST" name="SingleSuperAdminLoginTest" finished-at="2025-12-17T15:19:27 IST" duration-ms="18269">
+    <groups>
+    </groups>
+    <test started-at="2025-12-17T15:19:08 IST" name="SuperAdminLoginOnly" finished-at="2025-12-17T15:19:27 IST" duration-ms="18269">
+      <class name="Tests.SuperAdminTest.SuperAdminLoginTest">
+        <test-method is-config="true" signature="ensureBrowserIsRunning()[pri:0, instance:Tests.SuperAdminTest.SuperAdminLoginTest@31ff43be]" started-at="2025-12-17T15:19:08 IST" name="ensureBrowserIsRunning" finished-at="2025-12-17T15:19:08 IST" duration-ms="676" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ensureBrowserIsRunning -->
+        <test-method is-config="true" signature="navigateToCorrectUrl()[pri:0, instance:Tests.SuperAdminTest.SuperAdminLoginTest@31ff43be]" started-at="2025-12-17T15:19:08 IST" name="navigateToCorrectUrl" finished-at="2025-12-17T15:19:14 IST" duration-ms="5732" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- navigateToCorrectUrl -->
+        <test-method signature="BlankloginTest()[pri:1, instance:Tests.SuperAdminTest.SuperAdminLoginTest@31ff43be]" started-at="2025-12-17T15:19:14 IST" name="BlankloginTest" finished-at="2025-12-17T15:19:19 IST" duration-ms="4626" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- BlankloginTest -->
+        <test-method signature="InvalidLoginTest()[pri:2, instance:Tests.SuperAdminTest.SuperAdminLoginTest@31ff43be]" started-at="2025-12-17T15:19:19 IST" name="InvalidLoginTest" finished-at="2025-12-17T15:19:22 IST" duration-ms="3261" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InvalidLoginTest -->
+        <test-method signature="loginTest()[pri:3, instance:Tests.SuperAdminTest.SuperAdminLoginTest@31ff43be]" started-at="2025-12-17T15:19:22 IST" name="loginTest" finished-at="2025-12-17T15:19:27 IST" duration-ms="4629" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginTest -->
+      </class> <!-- Tests.SuperAdminTest.SuperAdminLoginTest -->
+    </test> <!-- SuperAdminLoginOnly -->
+  </suite> <!-- SingleSuperAdminLoginTest -->
+</testng-results>

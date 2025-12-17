@@ -2,41 +2,68 @@ package Base;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
+import Utils.ConfigReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-// This class is run separately to launch the persistent browser
+/**
+ * This class launches a persistent Chrome browser session
+ * for LOCAL execution only.
+ *
+ * It MUST NOT run in CI.
+ */
 public class LaunchSessionBrowser {
 
-    private static final String DEBUG_PORT = "53478";
-
     public static void main(String[] args) {
+
+        // 🚫 Do NOT allow persistent browser in CI
+        if (System.getenv("CI") != null) {
+            System.out.println("CI environment detected. Persistent browser will not be launched.");
+            return;
+        }
+
+        // ✅ Load config before reading properties
+        ConfigReader.loadConfig();
+
+        String DEBUG_PORT = ConfigReader.getProperty("port");
+
+        if (DEBUG_PORT == null || DEBUG_PORT.trim().isEmpty()) {
+            throw new RuntimeException(
+                "DEBUG PORT is not configured. Please set 'port' in config.properties"
+            );
+        }
+
         System.out.println("Starting persistent Chrome session on port " + DEBUG_PORT);
-        
-        // Ensure ChromeDriver is set up
+
+        // Ensure ChromeDriver is available
         if (System.getProperty("webdriver.chrome.driver") == null) {
             WebDriverManager.chromedriver().setup();
         }
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-debugging-port=" + DEBUG_PORT);
+        // options.addArguments("--user-data-dir=C:/chrome-session-hrms");
         options.addArguments("--start-maximized");
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-popup-blocking");
 
         try {
-            // Launch the browser and keep the process alive
-            // The process that runs this main method will hold the session
-            ChromeDriver driver = new ChromeDriver(options);
-            System.out.println("Persistent Chrome launched successfully.");
-            
-            // Wait indefinitely so the browser stays open and debuggable
-            // The user must manually close the browser when testing is complete.
+            // Launch Chrome
+            new ChromeDriver(options);
+
+            System.out.println("✅ Persistent Chrome launched successfully.");
+            System.out.println("👉 Do NOT close this terminal while running tests.");
+            System.out.println("👉 Close the browser manually when done.");
+
+            // Keep JVM alive so Chrome remains debuggable
             while (true) {
-                Thread.sleep(10000); // Sleep for 10 seconds and repeat
+                Thread.sleep(10_000);
             }
-            
+
         } catch (Exception e) {
-            System.err.println("Failed to launch persistent browser. Is port " + DEBUG_PORT + " already in use?");
+            System.err.println(
+                "❌ Failed to launch persistent browser. Is port " + DEBUG_PORT + " already in use?"
+            );
             e.printStackTrace();
         }
     }

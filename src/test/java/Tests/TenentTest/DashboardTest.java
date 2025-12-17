@@ -2,7 +2,6 @@ package Tests.TenentTest;
 
 import Base.Launch;
 
-import  Base.Launch;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
