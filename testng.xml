@@ -1,6 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="SingleSuperAdminLoginTest" verbose="2" parallel="false">
+ 
+ <listeners>
+        <listener class-name="Utils.TestListener"/>
+    </listeners>
+
     
     <test name="SuperAdminLoginOnly">
         <classes>
