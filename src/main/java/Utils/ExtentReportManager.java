@@ -14,7 +14,7 @@ public class ExtentReportManager {
 
         if (extent == null) {
 
-            String timeStamp = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss").format(new Date());
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HH:mm:ss").format(new Date());
             String reportPath = System.getProperty("user.dir")
                     + "/test-output/ExtentReport_" + timeStamp + ".html";
 
