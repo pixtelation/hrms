@@ -20,13 +20,22 @@ public class Launch {
     private static boolean isBrowserStarted = false;
     private static boolean isLoggedIn = false;
 
+    // -------------------------------------------------
+    // 🔹 STATIC INITIALIZATION
+    // -------------------------------------------------
     static {
+        // Load config once
         ConfigReader.loadConfig();
+
+        // Setup ChromeDriver (local + CI safe)
         if (System.getProperty("webdriver.chrome.driver") == null) {
             WebDriverManager.chromedriver().setup();
         }
     }
 
+    // -------------------------------------------------
+    // 🔹 GETTERS / SETTERS
+    // -------------------------------------------------
     public static WebDriver getDriver() {
         return driver;
     }
@@ -39,48 +48,60 @@ public class Launch {
         isLoggedIn = value;
     }
 
-    /** 🚀 Browser bootstrap */
+    // -------------------------------------------------
+    // 🔹 BROWSER INITIALIZATION (LOCAL + CI)
+    // -------------------------------------------------
     @BeforeSuite(alwaysRun = true)
     public void ensureBrowserIsRunning() {
 
         if (isBrowserStarted) return;
 
         boolean isCI = System.getenv("CI") != null;
-        String DEBUG_PORT = ConfigReader.getProperty("port");
 
         try {
             ChromeOptions options = new ChromeOptions();
 
             if (isCI) {
-                // 🤖 CI → fresh browser
-                System.out.println("🤖 CI detected → starting fresh browser");
+                // 🤖 CI ENVIRONMENT (GitHub Actions / Linux)
+                options.addArguments("--headless=new");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--window-size=1920,1080");
+
+                System.out.println("🤖 CI detected → starting HEADLESS Chrome");
+
             } else {
-                // 🧑‍💻 LOCAL → attach to persistent browser
+                // 🧑‍💻 LOCAL MACHINE → attach to persistent browser
+                String DEBUG_PORT = ConfigReader.getProperty("port");
+
                 options.setExperimentalOption(
-                    "debuggerAddress", "localhost:" + DEBUG_PORT
+                        "debuggerAddress", "localhost:" + DEBUG_PORT
                 );
-                System.out.println("🔗 Local run → attaching to persistent browser on port " + DEBUG_PORT);
+
+                System.out.println("🔗 Local run → attaching to persistent Chrome on port " + DEBUG_PORT);
             }
 
             driver = new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-            if (isCI) {
-                driver.manage().window().maximize();
-            }
-
             isBrowserStarted = true;
 
         } catch (Exception e) {
             throw new RuntimeException(
-                "❌ Failed to initialize browser. " +
-                "If running locally, ensure LaunchSessionBrowser is running.",
-                e
+                    "❌ Failed to initialize browser. " +
+                    (isCI
+                            ? "CI environment detected. Chrome failed to start headless."
+                            : "Ensure LaunchSessionBrowser is running locally."
+                    ),
+                    e
             );
         }
     }
 
-    /** 🌍 Navigate to correct domain */
+    // -------------------------------------------------
+    // 🔹 URL NAVIGATION BASED ON PACKAGE
+    // -------------------------------------------------
     @BeforeClass(alwaysRun = true)
     public void navigateToCorrectUrl() {
 
@@ -93,10 +114,12 @@ public class Launch {
 
         if (pkg.contains("SuperAdminTest")) {
             targetUrl = ConfigReader.getProperty("SuperAdminURL");
+
         } else if (pkg.contains("TenentTest")) {
             targetUrl = ConfigReader.getProperty("TenentAdminURL");
+
         } else {
-            throw new RuntimeException("No URL configured for: " + pkg);
+            throw new RuntimeException("❌ No URL configured for package: " + pkg);
         }
 
         try {
@@ -110,9 +133,11 @@ public class Launch {
         System.out.println("🌍 Navigated to: " + targetUrl);
     }
 
-    // ---------------- LOGIN HELPERS ----------------
-
+    // -------------------------------------------------
+    // 🔹 LOGIN HELPERS
+    // -------------------------------------------------
     public static void loginAsSuperAdmin() {
+
         if (isLoggedIn) return;
 
         SuperAdminLogin sa = new SuperAdminLogin(driver);
@@ -125,6 +150,7 @@ public class Launch {
     }
 
     public static void loginAsTenentAdmin() {
+
         if (isLoggedIn) return;
 
         TenentAdminLogin ta = new TenentAdminLogin(driver);
@@ -135,4 +161,17 @@ public class Launch {
         isLoggedIn = true;
         System.out.println("🔑 Logged in as Tenant Admin");
     }
+
+    // -------------------------------------------------
+    // ❌ NO TEARDOWN (browser stays open locally)
+    // -------------------------------------------------
+    /*
+    @AfterSuite(alwaysRun = true)
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
+    }
+    */
 }
