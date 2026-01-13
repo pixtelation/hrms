@@ -21,8 +21,9 @@ public class SuperAdminLoginTest extends Launch {
     
 
       String SAemail = ConfigReader.getProperty("superadmin_email");
-        String SApassword = ConfigReader.getProperty("superadmin_password");
+      String SApassword = ConfigReader.getProperty("superadmin_password");
 
+      
 
 @Test (priority = 1)/// Blank Login Flow
     public void BlankloginTest() {
