@@ -1,13 +1,16 @@
 package Base;
 
 import java.time.Duration;
+import java.util.Set;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.UnreachableBrowserException;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 import Pages.SuperAdminPage.SuperAdminLogin;
 import Pages.TenentPage.TenentAdminLogin;
@@ -18,38 +21,27 @@ public class Launch {
 
     private static WebDriver driver;
     private static boolean isBrowserStarted = false;
-    private static boolean isLoggedIn = false;
 
     // -------------------------------------------------
-    // 🔹 STATIC INITIALIZATION
+    // STATIC INITIALIZATION
     // -------------------------------------------------
     static {
-        // Load config once
         ConfigReader.loadConfig();
 
-        // Setup ChromeDriver (local + CI safe)
         if (System.getProperty("webdriver.chrome.driver") == null) {
             WebDriverManager.chromedriver().setup();
         }
     }
 
     // -------------------------------------------------
-    // 🔹 GETTERS / SETTERS
+    // GETTER
     // -------------------------------------------------
     public static WebDriver getDriver() {
         return driver;
     }
 
-    public static boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public static void setLoggedIn(boolean value) {
-        isLoggedIn = value;
-    }
-
     // -------------------------------------------------
-    // 🔹 BROWSER INITIALIZATION (LOCAL + CI)
+    // BROWSER INITIALIZATION (LOCAL + CI)
     // -------------------------------------------------
     @BeforeSuite(alwaysRun = true)
     public void ensureBrowserIsRunning() {
@@ -62,24 +54,18 @@ public class Launch {
             ChromeOptions options = new ChromeOptions();
 
             if (isCI) {
-                // 🤖 CI ENVIRONMENT (GitHub Actions / Linux)
                 options.addArguments("--headless=new");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--disable-gpu");
                 options.addArguments("--window-size=1920,1080");
-
-                System.out.println("🤖 CI detected → starting HEADLESS Chrome");
-
+                System.out.println("CI detected → starting headless Chrome");
             } else {
-                // 🧑‍💻 LOCAL MACHINE → attach to persistent browser
                 String DEBUG_PORT = ConfigReader.getProperty("port");
-
                 options.setExperimentalOption(
                         "debuggerAddress", "localhost:" + DEBUG_PORT
                 );
-
-                System.out.println("🔗 Local run → attaching to persistent Chrome on port " + DEBUG_PORT);
+                System.out.println("Local run → attaching to Chrome on port " + DEBUG_PORT);
             }
 
             driver = new ChromeDriver(options);
@@ -89,18 +75,18 @@ public class Launch {
 
         } catch (Exception e) {
             throw new RuntimeException(
-                    "❌ Failed to initialize browser. " +
-                    (isCI
-                            ? "CI environment detected. Chrome failed to start headless."
-                            : "Ensure LaunchSessionBrowser is running locally."
-                    ),
+                    "Browser initialization failed. " +
+                            (isCI
+                                    ? "Headless Chrome failed in CI."
+                                    : "Ensure persistent Chrome is running locally."
+                            ),
                     e
             );
         }
     }
 
     // -------------------------------------------------
-    // 🔹 URL NAVIGATION BASED ON PACKAGE
+    // URL NAVIGATION BASED ON PACKAGE
     // -------------------------------------------------
     @BeforeClass(alwaysRun = true)
     public void navigateToCorrectUrl() {
@@ -114,12 +100,10 @@ public class Launch {
 
         if (pkg.contains("SuperAdminTest")) {
             targetUrl = ConfigReader.getProperty("SuperAdminURL");
-
         } else if (pkg.contains("TenentTest")) {
             targetUrl = ConfigReader.getProperty("TenentAdminURL");
-
         } else {
-            throw new RuntimeException("❌ No URL configured for package: " + pkg);
+            throw new RuntimeException("No URL configured for package: " + pkg);
         }
 
         try {
@@ -130,40 +114,68 @@ public class Launch {
             driver.get(targetUrl);
         }
 
-        System.out.println("🌍 Navigated to: " + targetUrl);
+        System.out.println("Navigated to: " + targetUrl);
     }
 
     // -------------------------------------------------
-    // 🔹 LOGIN HELPERS
+    // LOGIN STATE VALIDATION (BROWSER-DRIVEN)
+    // -------------------------------------------------
+
+    private static boolean hasValidSessionCookie() {
+        Set<Cookie> cookies = driver.manage().getCookies();
+        return cookies.stream().anyMatch(c ->
+                c.getName().equalsIgnoreCase("JSESSIONID")
+                        || c.getName().toLowerCase().contains("session")
+        );
+    }
+
+    private static boolean isWelcomeBackVisible() {
+        try {
+            return driver.findElement(By.xpath("//*[normalize-space(.)='Welcome Back,']")).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static boolean isAlreadyLoggedIn() {
+        return hasValidSessionCookie() || isWelcomeBackVisible();
+    }
+
+    // -------------------------------------------------
+    // LOGIN HELPERS
     // -------------------------------------------------
     public static void loginAsSuperAdmin() {
 
-        if (isLoggedIn) return;
+        if (isAlreadyLoggedIn()) {
+            System.out.println("SuperAdmin already logged in — skipping login");
+            return;
+        }
 
         SuperAdminLogin sa = new SuperAdminLogin(driver);
         sa.enterEmail(ConfigReader.getProperty("superadmin_email"));
         sa.enterPassword(ConfigReader.getProperty("superadmin_password"));
         sa.clickLogin();
 
-        isLoggedIn = true;
-        System.out.println("🔑 Logged in as SuperAdmin");
+        System.out.println("Logged in as SuperAdmin");
     }
 
     public static void loginAsTenentAdmin() {
 
-        if (isLoggedIn) return;
+        if (isAlreadyLoggedIn()) {
+            System.out.println("Tenant Admin already logged in — skipping login");
+            return;
+        }
 
         TenentAdminLogin ta = new TenentAdminLogin(driver);
         ta.TenentEmailfnx(ConfigReader.getProperty("tenant_email"));
         ta.TenentPasswordfnx(ConfigReader.getProperty("tenant_password"));
         ta.TenentLoginbtn();
 
-        isLoggedIn = true;
-        System.out.println("🔑 Logged in as Tenant Admin");
+        System.out.println("Logged in as Tenant Admin");
     }
 
     // -------------------------------------------------
-    // ❌ NO TEARDOWN (browser stays open locally)
+    // NO TEARDOWN (LOCAL SESSION PERSISTS)
     // -------------------------------------------------
     /*
     @AfterSuite(alwaysRun = true)
