@@ -1,13 +1,15 @@
 package Tests.TenentTest;
 
 import Base.Launch;
-import Pages.TenentPage.ProjectManagement;
+import Pages.TenentPage.ProjectManagement.CreateProject;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class ProjectManagementTest extends Launch {
-    ProjectManagement pm;
+public class CreateProjectTest extends Launch {
+    CreateProject pm;
 
 
      @BeforeClass
@@ -26,13 +28,20 @@ public class ProjectManagementTest extends Launch {
     
     @Test
     public void ProjectManagementFlow() {
-        pm= new ProjectManagement(Launch.getDriver());
+        pm= new CreateProject(Launch.getDriver());
         pm.clickPMMenuBtn();
         pm.clickAddNewProjectBtn();
         pm.enterProjectName("New Project Alpha");
-        pm.enterStartDate("10/07/2025");
-        pm.enterProjectCost("15000");
-        pm.clickCreateBtn();
+        pm.selectProjectTypeDropdown();
+        pm.selectMobileApplicationOption();
+        pm.selectProjectTypeDropdown2();
+        pm.selectWebApplicationOption();
+        pm.selectFixedOption();
+//        pm.enterStartDate("10/07/2025");
+//        pm.enterProjectCost("15000");
+//        pm.clickCreateBtn();
+
+
     }
 
 }

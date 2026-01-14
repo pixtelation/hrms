@@ -2,9 +2,9 @@ name: HRMS Selenium Automation
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "arif" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "arif" ]
 
 jobs:
   run-tests:
