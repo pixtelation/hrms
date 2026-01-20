@@ -11,24 +11,23 @@ import org.testng.annotations.Test;
 public class CreateProjectTest extends Launch {
     CreateProject pm;
 
-
-     @BeforeClass
+    @BeforeClass
     public void prerequisiteLogin() {
         // 1. Check the package name
         String packageName = this.getClass().getPackage().getName();
-        
+
         // 2. Perform the required login if not already logged in
         if (packageName.contains("TenentTest")) {
             Launch.loginAsTenentAdmin();
         } else if (packageName.contains("SuperAdminTest")) {
             // Unlikely for DashboardTest, but good to show the conditional logic
-            Launch.loginAsSuperAdmin(); 
+            Launch.loginAsSuperAdmin();
         }
     }
-    
+
     @Test
     public void ProjectManagementFlow() {
-        pm= new CreateProject(Launch.getDriver());
+        pm = new CreateProject(Launch.getDriver());
         pm.clickPMMenuBtn();
         pm.clickAddNewProjectBtn();
         pm.enterProjectName("New Project Alpha");
@@ -36,11 +35,32 @@ public class CreateProjectTest extends Launch {
         pm.selectMobileApplicationOption();
         pm.selectProjectTypeDropdown2();
         pm.selectWebApplicationOption();
+        pm.selectProjectCostTypeDropdown();
         pm.selectFixedOption();
-//        pm.enterStartDate("10/07/2025");
-//        pm.enterProjectCost("15000");
-//        pm.clickCreateBtn();
+        pm.enterFixedProjectCost("1000");
+        pm.enterProjectEstimatedTime("10");
+        pm.clickFixedProjectTechnologiesDropdown();
+        ;
+        pm.selectAngularTechnologyOption();
+        pm.clickClientDropdown();
 
+        pm.selectClientOption();
+
+        pm.clickBdmDropdown();
+        pm.selectBdmOption();
+        pm.clickProjectManagerDropdown();
+        pm.selectProjectManagerOption();
+        pm.clickCoOrdinatorDropdown();
+        pm.selectCoOrdinatorOption();
+
+        pm.clickTeamLeadDropdown();
+        pm.selectTeamLeadOption();
+        pm.clickAcquisitionLeadsDropdown();
+        // pm.selectAcquisitionLeadsOption();
+        pm.clickTeamMembersDropdown();
+        pm.selectTeamMembersOption();
+
+        pm.clickCreateBtn();
 
     }
 
