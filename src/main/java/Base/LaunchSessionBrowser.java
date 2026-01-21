@@ -25,12 +25,11 @@ public class LaunchSessionBrowser {
         // ✅ Load config before reading properties
         ConfigReader.loadConfig();
 
-        String DEBUG_PORT = ConfigReader.getProperty("port");
+        String DEBUG_PORT = ConfigReader.getProperty("chrome.debug.port");
 
         if (DEBUG_PORT == null || DEBUG_PORT.trim().isEmpty()) {
             throw new RuntimeException(
-                "DEBUG PORT is not configured. Please set 'port' in config.properties"
-            );
+                    "DEBUG PORT is not configured. Please set 'port' in config.properties");
         }
 
         System.out.println("Starting persistent Chrome session on port " + DEBUG_PORT);
@@ -62,8 +61,7 @@ public class LaunchSessionBrowser {
 
         } catch (Exception e) {
             System.err.println(
-                "❌ Failed to launch persistent browser. Is port " + DEBUG_PORT + " already in use?"
-            );
+                    "❌ Failed to launch persistent browser. Is port " + DEBUG_PORT + " already in use?");
             e.printStackTrace();
         }
     }
