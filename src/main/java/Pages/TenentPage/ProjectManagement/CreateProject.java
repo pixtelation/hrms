@@ -140,11 +140,20 @@ public class CreateProject {
     WebElement teamMembersOption;
 
     // Client Section
-    @FindBy(xpath = "//FORM[contains(@class,'project-form-wraper')]/DIV[2]/DIV[2]/DIV[1]/DIV/DIV/DIV/DIV[2]/DIV/*[local-name()='svg']")
+    @FindBy(xpath = "//*[@placeholder=\"Client’s Email*\"]")
     WebElement selectClientDropdown;
 
     @FindBy(xpath = "//DIV[normalize-space(.)='George Shermazanashvili (George)']")
     WebElement clientOption;
+
+    @FindBy(xpath = "//FORM[contains(@class,'project-form-wraper')]/DIV[2]/DIV[2]/DIV[8]/DIV/DIV/DIV[.='Business Type*']")
+    WebElement selectBusinessTypeDropdown;
+
+    @FindBy(xpath = "//*[normalize-space(.)='New Business']")
+    WebElement newBusinessOption;
+
+    @FindBy(xpath = "//*[normalize-space(.)='Existing Business']")
+    WebElement existingBusinessOption;
 
     // Utility method to scroll to element
     public void scrollToElement(WebElement element) {
@@ -347,4 +356,20 @@ public class CreateProject {
         scrollToElement(clientOption);
         clientOption.click();
     }
+
+    public void clickBusinessTypeDropdown() {
+        scrollToElement(selectBusinessTypeDropdown);
+        selectBusinessTypeDropdown.click();
+    }
+
+    public void selectNewBusinessOption() {
+        scrollToElement(newBusinessOption);
+        newBusinessOption.click();
+    }
+
+    public void selectExistingBusinessOption() {
+        scrollToElement(existingBusinessOption);
+        existingBusinessOption.click();
+    }
+
 }

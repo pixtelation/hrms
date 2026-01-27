@@ -45,7 +45,8 @@ public class CreateProjectTest extends Launch {
         pm.clickClientDropdown();
 
         pm.selectClientOption();
-
+        pm.clickBusinessTypeDropdown();
+        pm.selectNewBusinessOption();
         pm.clickBdmDropdown();
         pm.selectBdmOption();
         pm.clickProjectManagerDropdown();
