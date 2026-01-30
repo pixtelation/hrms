@@ -2,9 +2,6 @@ package Tests.TenentTest;
 
 import Base.Launch;
 import Pages.TenentPage.ProjectManagement.CreateProject;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -42,6 +39,8 @@ public class CreateProjectTest extends Launch {
         pm.clickFixedProjectTechnologiesDropdown();
         ;
         pm.selectAngularTechnologyOption();
+        pm.enterStartDate("06/01/2026");
+
         pm.clickClientDropdown();
 
         pm.selectClientOption();

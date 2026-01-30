@@ -7,15 +7,23 @@ import org.openqa.selenium.support.PageFactory;
 
 public class AllProjects {
 
-    public AllProjects(WebDriver driver)
-    {
+    private WebDriver driver;
+
+    public AllProjects(WebDriver driver) {
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
+
     @FindBy(xpath = "//A[normalize-space(.)='Projects']")
     WebElement ProjectMenuBtn;
-    public void clickPMMenuBtn()
-    {
+    @FindBy(xpath = "//*[normalize-space(.)='New Project Alpha']")
+    WebElement NewProjectAlpha;
+
+    public void clickPMMenuBtn() {
         ProjectMenuBtn.click();
     }
 
+    public void clickNewProjectAlpha() {
+        NewProjectAlpha.click();
+    }
 }

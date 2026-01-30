@@ -50,7 +50,7 @@ public class CreateProject {
     @FindBy(xpath = "//*[normalize-space(.)='Retainer Hourly']")
     WebElement retainerHourlyOption;
 
-    @FindBy(xpath = "//*[contains(@class,'form-control react-datepicker-ignore-onclickoutside')]")
+    @FindBy(xpath = "//INPUT[@placeholder=\"Start Date*\"]")
     WebElement startDateTextField;
 
     @FindBy(xpath = "//*[@placeholder='Project Cost*']")
@@ -140,7 +140,7 @@ public class CreateProject {
     WebElement teamMembersOption;
 
     // Client Section
-    @FindBy(xpath = "//*[@placeholder=\"Client’s Email*\"]")
+    @FindBy(xpath = "//FORM[contains(@class,'project-form-wraper')]/DIV[2]/DIV[2]/DIV[1]/DIV/DIV/DIV/DIV[1]/DIV[2]")
     WebElement selectClientDropdown;
 
     @FindBy(xpath = "//DIV[normalize-space(.)='George Shermazanashvili (George)']")
