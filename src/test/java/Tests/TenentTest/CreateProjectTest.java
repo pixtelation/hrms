@@ -37,7 +37,6 @@ public class CreateProjectTest extends Launch {
         pm.enterFixedProjectCost("1000");
         pm.enterProjectEstimatedTime("10");
         pm.clickFixedProjectTechnologiesDropdown();
-        ;
         pm.selectAngularTechnologyOption();
         pm.enterStartDate("06/01/2026");
 

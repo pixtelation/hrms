@@ -36,7 +36,7 @@ public class TenentLoginTest extends Launch {
         } catch (TimeoutException e) {
             // Dashboard didn't load → check for toast (failure)
             try {
-                  WebElement toast = ta.waitForToastMessage(Launch.getDriver());
+                ta.waitForToastMessage(Launch.getDriver());
 
             // Use JavaScript to get text content (more reliable)
              JavascriptExecutor js = (JavascriptExecutor) Launch.getDriver();

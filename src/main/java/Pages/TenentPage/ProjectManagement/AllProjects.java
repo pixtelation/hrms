@@ -26,4 +26,5 @@ public class AllProjects {
     public void clickNewProjectAlpha() {
         NewProjectAlpha.click();
     }
+       
 }
